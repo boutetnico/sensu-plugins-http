@@ -1,6 +1,3 @@
-AllCops:
-  TargetRubyVersion: 2.3
-
 Metrics/MethodLength:
   Max: 200
 
@@ -34,20 +31,14 @@ Style/Documentation:
 Style/Next:
   Enabled: false
 
-# ruby 2.1, 2.2 support
 Style/NumericPredicate:
   Enabled: false
 
 Style/SafeNavigation:
   Enabled: false
 
-
-# highly opinionated, subject to false positives, and likely to break valid code
 Style/FormatStringToken:
   Enabled: false
 
-# testing
-Metrics/BlockLength:
-  Enabled: true
-  Exclude:
-    - 'test/**/*'
+Style/FrozenStringLiteralComment:
+  Enabled: false
