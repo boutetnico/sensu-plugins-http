@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'bundler/gem_tasks'
 require 'github/markup'
 require 'redcarpet'
@@ -37,14 +35,4 @@ task :check_binstubs do
   end
 end
 
-begin
-  require 'kitchen/rake_tasks'
-  Kitchen::RakeTasks.new
-  desc 'Alias for kitchen:all'
-  task integration: 'kitchen:all'
-rescue Kitchen::UserError
-  puts 'Kitchen module not loading'
-end
-
-task default: %i[spec make_bin_executable yard rubocop check_binstubs integration]
-task quick: %i[make_bin_executable yard rubocop check_binstubs]
+task default: %i[spec make_bin_executable yard rubocop check_binstubs]

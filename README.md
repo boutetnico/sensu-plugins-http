@@ -1,7 +1,11 @@
-[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/sensu-plugins/sensu-plugins-http)
-[![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-http.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-http)
-[![Gem Version](https://badge.fury.io/rb/sensu-plugins-http.svg)](http://badge.fury.io/rb/sensu-plugins-http)
-[![Dependency Status](https://gemnasium.com/sensu-plugins/sensu-plugins-http.svg)](https://gemnasium.com/sensu-plugins/sensu-plugins-http)
+## Sensu-Plugins-http
+
+[![Gem Version](https://badge.fury.io/rb/sensu-plugins-http-boutetnico.svg)](https://badge.fury.io/rb/sensu-plugins-http-boutetnico.svg)
+[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/boutetnico/sensu-plugins-http)
+
+## This is an unofficial fork
+
+This fork is automatically tested, built and published to [RubyGems](https://rubygems.org/gems/sensu-plugins-http-boutetnico/) and [Bonsai](https://bonsai.sensu.io/assets/boutetnico/sensu-plugins-http).
 
 ## Sensu HTTP Plugin
 
@@ -24,16 +28,16 @@ This plugin provides native HTTP instrumentation for monitoring and metrics coll
 The Sensu assets packaged from this repository are built against the Sensu ruby runtime environment. When using these assets as part of a Sensu Go resource (check, mutator or handler), make sure you include the corresponding Sensu ruby runtime asset in the list of assets needed by the resource.  The current ruby-runtime assets can be found [here](https://bonsai.sensu.io/assets/sensu/sensu-ruby-runtime) in the [Bonsai Asset Index](bonsai.sensu.io)
 
 #### Files
+ * bin/check-head-redirect.rb
+ * bin/check-http-cors.rb
  * bin/check-http-json.rb
  * bin/check-http.rb
  * bin/check-https-cert.rb
  * bin/check-last-modified.rb
  * bin/metrics-curl.rb
- * bin/metrics-libcurl.rb
- * bin/metrics-http-json.rb
  * bin/metrics-http-json-deep.rb
- * bin/check-head-redirect.rb
- * bin/check-http-cors.rb
+ * bin/metrics-http-json.rb
+ * bin/metrics-libcurl.rb
 
 ## Usage examples
 
