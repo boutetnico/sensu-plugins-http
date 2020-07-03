@@ -35,6 +35,7 @@ The Sensu assets packaged from this repository are built against the Sensu ruby 
  * bin/check-https-cert.rb
  * bin/check-last-modified.rb
  * bin/metrics-curl.rb
+ * bin/metrics-curl-json.rb
  * bin/metrics-http-json-deep.rb
  * bin/metrics-http-json.rb
  * bin/metrics-libcurl.rb
