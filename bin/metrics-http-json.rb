@@ -1,6 +1,5 @@
 #! /usr/bin/env ruby
-# frozen_string_literal: false
-
+#
 #   metrics-http-json.rb
 #
 # DESCRIPTION:
@@ -17,7 +16,9 @@
 #   gem: rest-client
 #
 # USAGE:
-#   EX: ./metrics-http-json.rb -u 'http://127.0.0.1:8080/jolokia/read/com\
+#   ./metrics-http-json.rb -u 'https://user:password@127.0.0.1:443
+#
+#   ./metrics-http-json.rb -u 'http://127.0.0.1:8080/jolokia/read/com\
 #   .mchange.v2.c3p0:name=datasource,type=PooledDataSource' -s hostname.c3p0\
 #    -m 'Connections::numConnections,BusyConnections::numBusyConnections'\
 #    -o 'value'
@@ -56,9 +57,10 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          default: Socket.gethostname.to_s
 
   option :metric,
-         description: 'Metric/JSON key pair ex:Connections::numConnections',
+         description: 'Optional Metric/JSON key pair ex:Connections::numConnections',
          short: '-m METRIC::JSONKEY',
-         long: '--metric METRIC::JSONKEY'
+         long: '--metric METRIC::JSONKEY',
+         default: nil
 
   option :headers,
          description: 'Additional HTTP request headers to send. Example: Authorization:XYZ,User-Agent:ABC',
@@ -81,6 +83,16 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          short: '-d',
          long: '--debug',
          default: false
+
+  def deep_value(hash, scheme = '')
+    hash.each do |key, value|
+      if value.is_a?(Hash)
+        deep_value(value, "#{scheme}.#{key}")
+      else
+        output "#{scheme}.#{key}", value
+      end
+    end
+  end
 
   def run
     puts "args config: #{config}" if config[:debug]
@@ -110,20 +122,25 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
       )
 
       puts "Http response: #{r}" if config[:debug]
-      metric_pair_array = metric_pair_input.split(/,/)
-      metric_pair_array.each do |m|
-        metric, attribute = m.to_s.split(/::/)
-        puts "metric: #{metric}, attribute: #{attribute}" if config[:debug]
-        unless object.nil?
-          ::JSON.parse(r)[object].each do |k, v|
+
+      if config[:metric].nil?
+        deep_value(::JSON.parse(r), scheme)
+      else
+        metric_pair_array = metric_pair_input.split(/,/)
+        metric_pair_array.each do |m|
+          metric, attribute = m.to_s.split(/::/)
+          puts "metric: #{metric}, attribute: #{attribute}" if config[:debug]
+          unless object.nil?
+            ::JSON.parse(r)[object].each do |k, v|
+              if k == attribute
+                output([scheme, metric].join('.'), v)
+              end
+            end
+          end
+          ::JSON.parse(r).each do |k, v|
             if k == attribute
               output([scheme, metric].join('.'), v)
             end
-          end
-        end
-        ::JSON.parse(r).each do |k, v|
-          if k == attribute
-            output([scheme, metric].join('.'), v)
           end
         end
       end
