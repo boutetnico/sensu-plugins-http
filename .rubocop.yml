@@ -42,3 +42,9 @@ Style/FormatStringToken:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
